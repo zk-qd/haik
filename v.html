@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body,
+    html {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        padding: 0;
+        margin: 0;
+
+    }
+
+    body {
+        background: url(./1.jpg) no-repeat scroll center;
+        background-size: 100% 100%;
+        position: relative;
+    }
+
+    iframe {
+        width: 95%;
+        height: 74%;
+        position: absolute;
+        left: 2.5%;
+        top: 16.5%;
+    }
+
+    ul {
+        position: absolute;
+        left: 15%;
+        top: 9%;
+        color: white;
+        list-style: none;
+    }
+
+    li {
+        float: left;
+    }
+</style>
+
+<body>
+    <!-- http://172.20.2.245/doc/page/preview.asp -->
+    <iframe src="./control/demo/cn/demo.html" frameborder="0"></iframe>
+    <ul>
+        <li class='year'></li>
+        <li class='month'></li>
+        <li class='day'></li>
+        <li class='hour'></li>
+        <li class='minute'></li>
+        <li class='dot'>:</li>
+        <li class='second'></li>
+        <li class='week'></li>
+    </ul>
+</body>
+
+</html>
+<script>
+    var ul = document.getElementsByTagName('ul')[0];
+    var fontSize = window.innerWidth * 25 / 1920;
+    ul.style.fontSize = fontSize + 'px';
+    var yearDom = document.getElementsByClassName('year')[0],
+        monthDom = document.getElementsByClassName('month')[0],
+        dayDom = document.getElementsByClassName('day')[0],
+        hourDom = document.getElementsByClassName('hour')[0],
+        minuteDom = document.getElementsByClassName('minute')[0],
+        dotDom = document.getElementsByClassName('dot')[0],
+        secondDom = document.getElementsByClassName('second')[0],
+        weekDom = document.getElementsByClassName('week')[0];
+    var dot = false;
+    String.prototype.padStart = function (num, pad) {
+        if (this.length !== num) {
+            return pad + this;
+        } else {
+            return this;
+        }
+    };
+    window.setInterval(function () {
+        dot = !dot;
+        if (dot) dotDom.style.visibility = 'visible';
+        else dotDom.style.visibility = 'hidden';
+        var date = new Date(),
+            second = (date.getSeconds().toString().padStart(2, '0')),
+            minute = ':' + date.getMinutes().toString().padStart(2, '0'),
+            hour = date.getHours().toString().padStart(2, '0'),
+            year = date.getFullYear() + '年',
+            month = (date.getMonth() + 1).toString().padStart(2, '0') + '月',
+            day = date.getDate().toString().padStart(2, '0') + '日&nbsp;&nbsp;';
+        week = date.getDay();
+        yearDom.innerHTML = year;
+        monthDom.innerHTML = month;
+        dayDom.innerHTML = day;
+        hourDom.innerHTML = hour;
+        minuteDom.innerHTML = minute;
+        secondDom.innerHTML = second;
+        switch (week) {
+            case 1:
+                weekDom.innerHTML = '&nbsp;&nbsp;星期一';
+                break;
+            case 2:
+                weekDom.innerHTML = '&nbsp;&nbsp;星期二';
+                break;
+            case 3:
+                weekDom.innerHTML = '&nbsp;&nbsp;星期三';
+                break;
+            case 4:
+                weekDom.innerHTML = '&nbsp;&nbsp;星期四';
+                break;
+            case 5:
+                weekDom.innerHTML = '&nbsp;&nbsp;星期五';
+                break;
+            case 6:
+                weekDom.innerHTML = '&nbsp;&nbsp;星期六';
+                break;
+            case 7:
+                weekDom.innerHTML = '&nbsp;&nbsp;星期天';
+                break;
+        }
+    }, 500)
+
+</script>
